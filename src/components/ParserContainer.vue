@@ -1,25 +1,33 @@
 <template>
   <v-container>
+    <v-card
+    elevation="2"
+    class="mt-8 mx-auto pa-4 rounded-lg"
+    >
     <v-row>
-      <v-col><h3>Please type in your query or select one from the predefined list</h3></v-col>
+      <v-col><p style="font-size: 22px;" class="text-center font-weight-medium">Please type in your query or select one from the predefined list</p></v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" md="3">
-        <v-select label="Predefined Queries" :items="predefinedQueries" v-model="sqlQuery" :disabled="showData"></v-select>
+    <v-row class="justify-center">
+      <v-col cols="12" md="8" lg="9">
+        <v-text-field v-model="sqlQuery" label="Query" clearable hint="Please enter a valid SQL Query" :disabled="showData" @click="onClickClearQuery()" dense outlined> </v-text-field>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" sm="6" lg="9">
-        <v-text-field v-model="sqlQuery" label="Query" clearable hint="Please enter a valid SQL Query" :disabled="showData" @click="onClickClearQuery()"> </v-text-field>
+    <v-row class="justify-center">
+      <v-col cols="12" md="4" lg="6">
+        <v-select label="Predefined Queries" :items="predefinedQueries" v-model="sqlQuery" :disabled="showData" solo dense></v-select>
       </v-col>
-      <v-col cols="12" sm="6" lg="3" class="mt-6">
-        <v-row>
-          <v-btn class="mr-2" pt-2 :disabled="!isSQLqueryEmpty" @click="onRunQuery()">Run Query</v-btn>
+      <v-col cols="12" md="4" sm="3" lg="3" class="mt-3 mb-3">
+        <v-row class="justify-center">
+          <v-btn class="mr-2" pt-2 :disabled="!isSQLqueryEmpty" @click="onRunQuery()" color="primary">Run Query</v-btn>
           <v-btn pt-2 :disabled="!isSQLqueryEmpty" @click="onClickClearQuery()">Clear Results</v-btn>
         </v-row>
       </v-col>
     </v-row>
-    <result-component v-if="showData" :query="sqlQuery"></result-component>
+    </v-card>
+    <v-card v-if="showData" elevation="2"
+        class="mt-8 mx-auto pa-4 rounded-lg">
+        <result-component v-if="showData" :query="sqlQuery"></result-component>
+    </v-card>
   </v-container>
 </template>
 <script lang="ts">
@@ -55,4 +63,5 @@ export default class ParserContainer extends Vue {
     this.sqlQuery = '';
   }
 }
+
 </script>
